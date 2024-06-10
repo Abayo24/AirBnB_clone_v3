@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 """ holds class User"""
+
+
+import hashlib
 import models
 from models.base_model import BaseModel, Base
 from os import getenv
@@ -26,4 +29,23 @@ class User(BaseModel, Base):
 
     def __init__(self, *args, **kwargs):
         """initializes user"""
+        if 'password' in kwargs:
+            kwargs['password'] = self.hash_password(kwargs['password'])
         super().__init__(*args, **kwargs)
+
+
+    @property
+    def password(self):
+        """password getter"""
+        return self._password
+
+
+    @password.setter
+    def password(self, value):
+        """password setter"""
+        self._password = self.hash_password(value)
+
+
+    def hash_password(self, password):
+        """hashes the password using MD5"""
+        return hashlib.md5(password.encode()).hexdigest()
