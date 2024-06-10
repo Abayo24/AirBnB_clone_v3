@@ -33,18 +33,15 @@ class User(BaseModel, Base):
             kwargs['password'] = self.hash_password(kwargs['password'])
         super().__init__(*args, **kwargs)
 
-
     @property
     def password(self):
         """password getter"""
         return self._password
 
-
     @password.setter
     def password(self, value):
         """password setter"""
         self._password = self.hash_password(value)
-
 
     def hash_password(self, password):
         """hashes the password using MD5"""
