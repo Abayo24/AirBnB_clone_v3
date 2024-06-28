@@ -2,6 +2,7 @@
 """app.py"""
 
 from flask import Flask, jsonify
+from flask_cors import CORS
 from models import storage
 from api.v1.views import app_views
 import os
